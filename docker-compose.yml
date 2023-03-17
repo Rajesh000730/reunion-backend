@@ -13,3 +13,18 @@ services:
             - MONGO_INITDB_ROOT_USERNAME=mongoadmin
             - MONGO_INITDB_ROOT_PASSWORD=passwd
         image: mongo
+
+    app:
+        container_name: docker-app
+        build: ./
+        restart: unless-stopped
+        env_file: .env
+        environment:
+            - MONGO_URI=${MONGO_URI}
+            - secret=${secret}
+            - name=${name}
+            - email=${email}
+            - password=${password}
+        ports:
+            - '3000:3000'
+        
