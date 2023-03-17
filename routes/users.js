@@ -86,7 +86,13 @@ router.get('/all_posts', async (req, res)=>{
 router.get('/posts/:id', async (req, res)=>{
     try{
         const post = await posts.findById(req.params.id)
-        res.json(post)
+        res.json({
+            id:post._id,
+            description: post.description,
+            date: post.date,
+            likes: post.likes,
+            comments: post.comments.length
+        })
     }
     catch(err){
         console.log(err)
