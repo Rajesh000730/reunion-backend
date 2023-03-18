@@ -32,7 +32,12 @@ mongoose.connect(process.env.MONGO_URI).then(() => {console.log("connected")}).c
 
 const deleteUser = async ()=>{
   try{
-    await user.deleteMany({})
+     const user1 = await user.findOne({email: process.env.email})
+     const user2 = await user.findOne({email: "rajesh1@gmail.com"})
+      const user = user1 || user2
+     if(user){
+       await user.delete()
+     }
   }
   catch(err){
     console.log(err)
@@ -62,7 +67,7 @@ const addDummyUser = async ()=>{
   }
 
 try{
-  deleteUser()
+  // deleteUser()
   addDummyUser()
 }
 catch(err){
