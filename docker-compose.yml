@@ -17,6 +17,9 @@ services:
     app:
         container_name: docker-app
         build: ./
+        volumes:
+            - ./:/app
+            - ./init.sh:/docker-entrypoint-initdb.d/init.sh
         restart: unless-stopped
         env_file: .env
         environment:
@@ -27,4 +30,7 @@ services:
             - password=${password}
         ports:
             - '3000:3000'
+        entrypoint: sh -c "npm start && npm run test"
+        network_mode: 'host'
+                
         
